@@ -1,0 +1,16 @@
+#!/usr/bin/expect  
+# 参数1：远程host；参数2：远程password  参数2：远程port
+if { $argc != 2 } {  
+    send_user "Usage: host password\n"  
+    exit  
+}  
+  
+set host [lindex $argv 0]  
+set pw [lindex $argv 1] 
+set port [lindex $argv 2]   
+  
+# 登录远程机器  
+catch {spawn ssh $host}  
+expect "*assword:*" { send "$pw\r" }  
+expect "*passcode:*" { send "\r" }    
+expect "*ogin:*" { send "cd /root\r"; interact }  

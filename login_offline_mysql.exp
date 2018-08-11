@@ -1,0 +1,6 @@
+  1 #!/usr/bin/expect
+  2 
+  3 # 登录远程机器 pw 123456
+  4 set timeout 30
+  5 catch {spawn mysql -u poker_ser -h 10.0.0.115 -P3306 --default-character-set=utf8 -p123456}
+  6 expect "*" { send "use esun_poker;\r"; interact } 

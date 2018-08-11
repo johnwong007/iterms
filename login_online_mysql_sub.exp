@@ -1,0 +1,22 @@
+#!/usr/bin/expect  
+
+# jumphost换成自己跳板机的host    
+set TERMSERV "119.147.211.237"  
+
+# jumpuser换成跳板机的user  
+set USER "jumper"    
+
+# jumppasswd换成跳板机的password 
+set PASSWORD "DeTure#A:AvrilLavigne#T:2012"   
+  
+# 登录跳板机  
+catch {spawn ssh -l $USER -p 52222 $TERMSERV}  
+expect "*assword:*" { send "$PASSWORD\r" }  
+expect "*passcode:*" { send "\r" }  
+
+# 登录远程机器 pw Dz+Agi7pG3ySez%=Lm-c^5g$mAR
+expect "*ogin:*" { send "ssh query@30.30.32.118\r" }   
+expect "*assword:*" { send "27F1>N#s7o5Yk>\$2\r" } 
+expect "*ogin:*" { send "mysql -u poker_web -h 30.30.32.108 --default-character-set=utf8 -p704poker@web debao_poker\r" }   
+# expect "*assword:*" { send "232poker@service\r" }   
+expect "*" { send "use debao_poker;\r"; interact } 

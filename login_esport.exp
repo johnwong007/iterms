@@ -1,0 +1,37 @@
+#!/usr/bin/expect  
+# 参数1：远程host；参数2：远程password  
+if { $argc != 2 } {  
+    send_user "Usage: host password\n"  
+    exit  
+}  
+  
+set host [lindex $argv 0]  
+set pw [lindex $argv 1]  
+
+# jumphost换成自己跳板机的host    
+set TERMSERV "119.23.115.66"  
+
+# jumpuser换成跳板机的user  
+set USER "root"    
+
+# jumppasswd换成跳板机的password 
+set PASSWORD "debaopoker12#"  
+# 从文件中/tmp/passcode读取passcode  
+# set fd [open /tmp/passcode r]  
+# gets $fd pc  
+# close $fd  
+  
+# 登录跳板机  
+catch {spawn ssh -l $USER -p 52222 $TERMSERV}  
+expect "*assword:*" { send "$PASSWORD\r" }  
+expect "*passcode:*" { send "\r" }  
+  
+# 登录远程机器  
+# expect "*$TERMSERV*" { send "ssh -l root1 $host\r" }  
+# expect "*assword:*" { send "$pw\r" }  
+# expect "*$host*" { send "cd /tmp\r"; interact } 
+
+# 登录远程机器 pw Dz+Agi7pG3ySez%=Lm-c^5g$mAR
+expect "*ogin:*" { send "ssh $host\r" }   
+expect "*assword:*" { send "$pw\r" }  
+expect "*" { send "cd /online_debao\r"; interact } 
